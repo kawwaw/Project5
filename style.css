@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+a {
+    color: #ffffff;
+}
+section {
+    width: 46%;
+    min-height: 560px;
+    float: left;
+    text-align: center;
+    margin: 6px 1%;
+    background-color: #fff;
+    padding: 24px 1%;
+    border-radius: 3px;
+    -webkit-box-shadow: 3px 6px 10px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 3px 6px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 3px 6px 10px rgba(0, 0, 0, 0.05);
+}
+html, body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    background-color: #f7f7f7;
+    min-width: 1200px;
+}
+h2 {
+    padding: 24px 36px;
+    color: rgba(0,0,0,0.83);
+}
+h3 {
+    text-align: center;
+    padding-bottom: 24px;
+    font-size: 18px;
+    color: rgba(0,0,0,0.5);
+}
+h2, h3 {
+    font-weight: 300;
+}
+#avg-temp {
+    font-size: 20px;
+    color: rgba(0,0,0,0.8);
+    text-align: center;
+    padding-top: 6px;
+    font-weight: 400;
+}
+#temperature-change, #svg2, #r-plot ,#USA{
+    text-align: center;
+}
+#svg2, #USA {
+    width: 100%;
+    height: 500px;
+}
+#hand_outline {
+    width: 100%;
+    height: 500px;
+}
+#overlayHands {
+    width: 100%;
+    height: 500px;
+}
+#r-plot img {
+    top: 60px;
+    position: relative;
+}
+#introduction {
+    width: 96%;
+    margin: 0 1% 24px 1%;
+    height: auto;
+    min-height: 0;
+    font-size: 1.1em;
+}
+.detail-container {
+    padding-top: 12px;
+    text-align: center;
+    color: rgba(0,0,0,0.38);
+    font-weight: 300;
+}
+.indigo {
+    background-color: #3F51B5;
+}
+.purple {
+    background-color: #7E57C2;
+}
+.blue {
+    background-color: #2196F3;
+}
+.teal {
+    background-color: #009688;
+}
+.cyan {
+    background-color: #00BCD4;
+}
+.green {
+    background-color: #4CAF50;
+}
+.light-green {
+    background-color: #8BC34A;
+}
+.lime {
+    background-color: #FF9800;
+}
+.description {
+    color: #ffffff;
+}
+.description p {
+    font-size: 1.2em;
+    padding: 6px 24px;
+    line-height: 1.6em;
+    text-align: justify;
+}
+.description h3 {
+    text-align: left;
+    padding-left: 36px;
+    color: rgba(255,255,255,0.6);
+}
+.intro-container {
+    width: 60%;
+    margin: 0 auto;
+}
+circle:hover {
+    fill: #4CAF50;
+}
+.hint {
+    font-size: 14px;
+}
+select {
+    margin-right: 24px;
+}
+ul { 
+    display: block;
+    list-style-type: disc;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 50px;
+}
+
+li {
+    text-align: left;
+}
+
