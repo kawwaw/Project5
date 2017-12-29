@@ -32,12 +32,6 @@
             </p>
             <p>
                 Tekst2
-                <ul>
-                    <li>Point or click on a point in the scatterplot and the hand outline is shown to the left.</li>
-                    <li>You can choose other PC´s instead and follow the points positions change.</li>
-                    <li>Click at the text on top of the blue hand outline and you will see the generation of all the hands sorted
-                        after their position along PC1.</li>
-                </ul>
             </p>
         </div>
     </section>
@@ -52,19 +46,7 @@
 
     <section id="introduction" class="indigo description">
         <div class="intro-container">
-            <p>
-                In this project we investigate the variance of 40 different hands in different configurations. The hands vary in size, shape
-                and configuration. For each hand we have x and y coordinates of 56 specific points of the hand outline. This
-                gives us 112 values for each hand.
-            </p>
-            <p>
-                To investigate the variation between the hands outline a principal component analysis (PCA) was made. This statistical methods
-                place 40 hands in a 112-dimensional space. This means that all the variables have a dimension orthogonal
-                to all of the others. The 40 points lay as a cloud of points in this multidimensional space, and the analysis
-                finds the direction in the space that represents the largest part of the variance between the 40 points.
-                This direction is called the first principal component (PC1). Next the second direction is found orthogonal
-                to PC1 and describing the largest part of the rest of the variance.
-            </p>
+
         </div>
     </section>
 
@@ -77,51 +59,25 @@
     <section class="description teal">
         <h3>Results</h3>
         <p>
-            The PCA gives us some remarkable results that we have listed here:
-            <ul>
-                <li>As there are only 40 hands in the 112-dimensional space, the first 40 PC´s can capture the entire variation.</li>
-                <li>
-                    The first 5-6 PC´s captures almost all variation. The scatterplot view shows that if you change the PC´s shown. For PC´s
-                    number 7 and later the points almost have the same values and the variation is very low.
-                </li>
-                <li>
-                    The hand outlines on top of each other illustrates that PC1 represent the variation of how spread the fingers are and also
-                    the position of the start and end points of the hand outlines.
-                </li>
-            </ul>
+
         </p>
         <h3>Conclusion</h3>
         <p>
-            We can conclude that the PCA is able to find the most important variance between the hands and this variance is easy to interpret
-            visually. Interactive visualization is a great tool to illustrate results of high dimensional data and the analysis
-            of these.
+
         </p>
     </section>
 
     <section class="description blue">
         <h3>Individual Part - Juraj</h3>
         <p>
-            Implementation of 'Support changing which two PCA-variables are displayed in panel two'
-        </p>
-        <p>
-            The user can now choose from two dropdowns which PCA-variables they wish to be displayed. When a value is selected, the scatter
-            plot will transition the points into the new position.
-        </p>
-        <p>
-            This feature makes it easy for the user to observe the changes in variance between individual PCA-variables. It is clear from the plot
-            that combinations of the first few variables result in the points being fairly spread out while the use of variables with smaller variance
-            brings all the points closer to 0 on both axes.
+
         </p>
     </section>
 
     <section class="description lime">
         <h3>Individual Part - Kamma</h3>
         <p>
-            My individual part is the section with the blue hand outline. My intension was to show what PC1 really captures of variation.
-            By sorting of the hands and placing them one by one on top of each other the user should be able to follow the
-            trip from one end of the PC1 to the other. By coloring the hands according to their order number along PC1 it
-            makes it easy to see the changing outline pattern. Improvements: An idea is to make the hand outlines smaller
-            and move the whole svg as a little train along the PC1-axis that could also be visualized.
+
         </p>
         <br/>
     </section>
@@ -129,14 +85,7 @@
     <section class="description cyan">
         <h3>Individual Part - Frederik</h3>
         <p>
-            I have implemented the 'Display multiple hand-outlines and highlight the corresponding PCA-coordinates when one is selected'
-            suggestion from the assignment description.
-        </p>
-        <p>
-            When the user clicks a point in the scatter plot, the hand corresponding to the point will be display in the hand-outline
-            section. The user can click multiple points in the scatter plot, to display multiple hands. Each click generates
-            a random color for the point and hand-outline pair, used to indicate which points has been clicked, and to illustrate
-            which hand-outlines each point represents. The user can toggle the hand-outline, by clicking the point again.
+            
         </p>
     </section>
 
