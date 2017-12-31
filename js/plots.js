@@ -10,8 +10,8 @@ function init() {
 
     var w = width;
     var h = height;
-    console.log(width);
-    console.log(height);
+    //console.log(width);
+    //console.log(height);
 
 
     var wSF = +svgSF.node().getBoundingClientRect().width;
@@ -29,23 +29,10 @@ function init() {
     var offsetKW = projectionKW.translate();
 
 
-    console.log("offsetKW" + offsetKW);
-
-
-    var projectionSF = d3.geoAlbersUsa()
-
-        .scale([3000])
-        .translate([1100,hSF/2])
-    ;
-
-    var centerSF = projectionSF.center;
-    console.log("center" + centerSF);
-
-
     var piyg = d3.scaleSequential(d3.interpolatePiYG)
         .domain([1, 40]);
 
-    console.log(piyg(2));
+    //console.log(piyg(2));
 
 
 
@@ -60,14 +47,12 @@ function init() {
 
     //create path variable
     var pathSF =  d3.geoPath()
-        //.projection(projectionSF)
         .projection(Mercator)
     ;
 
-    var offsetSF = projectionSF.translate();
-   // var centerSF = projectionSF.center();
-    console.log("offset" + offsetSF);
-    //console.log(centerSF);
+    var offsetMercator = Mercator.translate();
+    console.log("offsetM" + offsetMercator);
+
 
     //Define what to do when dragging
     var dragging = function(d) {
@@ -84,10 +69,15 @@ function init() {
 
         //Update projection with new offset
         Mercator.translate(offset);
+        console.log("kontrol" +  Mercator.translate());
 
         //Update all paths and circles
         svgSF.selectAll("path")
             .attr("d", pathSF)
+        ;
+        svgSF.selectAll("circle")
+            .attr("cx",function(d){return Mercator([d.geometry.coordinates[0],d.geometry.coordinates[1]])[0]})
+            .attr("cy",function(d){return Mercator([d.geometry.coordinates[0],d.geometry.coordinates[1]])[1]})
         ;
 
     };
@@ -119,6 +109,13 @@ function init() {
         console.log("crime under");
         console.log(crime);
 
+        var colorCrime = d3.scaleOrdinal()
+            .range(d3.schemeCategory10)
+        ;
+
+        var crimeFea = crime.features;
+ //       console.log(crimeFea.properties);
+
         mapSF.selectAll("path")
             .data(json.features)
             .enter()
@@ -129,15 +126,30 @@ function init() {
             .style("stroke-width", 1)
         ;
 
+        //var colorKat = d3.scaleOrdinal(d3.schemePaired);
+
+        console.log(d3.schemePaired);
+
         mapSF.selectAll("circle")
             .data(crime.features)
             .enter()
             .append("circle")
             .attr("cx",function(d){return Mercator([d.geometry.coordinates[0],d.geometry.coordinates[1]])[0]})
             .attr("cy",function(d){return Mercator([d.geometry.coordinates[0],d.geometry.coordinates[1]])[1]})
-            .attr("r",1)
-            .attr("fill", "green")
-            .attr("opacity", 0.2)
+            .attr("r",2)
+            //.attr("fill", "green")
+           // .attr("opacity", 0.3)
+            .style("fill", function (d) {
+                console.log(d.properties.Category);
+                var Kat = d.properties.Category;
+                if (Kat == "LARCENY/THEFT") {
+                    return "red";
+                }
+                if (Kat == "OTHER OFFENSES") {
+                    return "orange";
+                }
+                else {   return "green";}
+            })
         ;
     }
 
