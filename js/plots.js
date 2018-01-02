@@ -108,6 +108,14 @@ function init() {
         console.log(json);
         console.log("crime under");
         console.log(crime);
+        
+        var categories = crime.features.map(function(a){
+          return a.properties.Category;
+        }).filter(function(v, i, s){
+          return s.indexOf(v) === i;
+        });
+
+        console.log(categories);
 
         var colorCrime = d3.scaleOrdinal()
             .range(d3.schemeCategory10)
@@ -140,7 +148,7 @@ function init() {
             //.attr("fill", "green")
            // .attr("opacity", 0.3)
             .style("fill", function (d) {
-                console.log(d.properties.Category);
+//                console.log(d.properties.Category);
                 var Kat = d.properties.Category;
                 if (Kat == "LARCENY/THEFT") {
                     return "red";
