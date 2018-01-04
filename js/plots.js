@@ -60,9 +60,10 @@ function init() {
     d3.queue()
         .defer(d3.json, 'sf_crime.geojson')
         .defer(d3.json, 'sfpd_districts.geojson')
+        .defer(d3.json, 'days.json')
         .await(ready);
 
-    function ready(error, crime, json) {
+    function ready(error, crime, json, daysData) {
 
         if (error) {
             throw error;
@@ -78,8 +79,8 @@ function init() {
 
         var select = document.getElementById("crime-category");
         var all = document.createElement("option");
-        all.value = "ALL"
-        all.text = "ALL"
+        all.value = "ALL";
+        all.text = "ALL";
         select.options.add(all);
         for (var i = 0; i < categories.length; i++) {
             var opt = document.createElement("option");
@@ -101,8 +102,7 @@ function init() {
             .style("stroke", "blue")
             .style("stroke-width", 1);
 
-        svg
-            .selectAll("circle")
+        svg.selectAll("circle")
             .data(data)
             .enter()
             .append("circle")
@@ -142,17 +142,125 @@ function init() {
                         .data(data)
                         .enter()
                         .append("circle")
-                        .attr("cx", function(d) {
-                            return Mercator([ d.geometry.coordinates[0], d.geometry.coordinates[1] ])[0]
+                        .attr("cx", function (d) {
+                            return Mercator([d.geometry.coordinates[0], d.geometry.coordinates[1]])[0]
                         })
-                        .attr("cy", function(d) {
-                            return Mercator([ d.geometry.coordinates[0], d.geometry.coordinates[1] ])[1]
+                        .attr("cy", function (d) {
+                            return Mercator([d.geometry.coordinates[0], d.geometry.coordinates[1]])[1]
                         })
                         .attr("r", 2)
                         .attr("fill", "green")
                         .attr("opacity", 0.3);
                 }
-
             });
+
+
+        //radial plot
+
+        days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+        var sectionWidth = d3.select("section").node().getBoundingClientRect().width;
+        var radialSvg = d3.select("#radial-plot");
+        var width = +radialSvg.attr("width");
+        var height = +radialSvg.attr("height");
+        var radius = 190;
+
+        var g = radialSvg.append("g").attr("transform", "translate(250,250)");
+
+        var x = d3.scaleBand().range([0, 2 * Math.PI]);
+        var y = d3.scaleLinear();
+
+        x.domain(data.map(function (d, i) {
+            return days[(i % 7)];
+        }));
+        y.domain([0, 2000])
+            .range([50, 175]);
+
+        var label = g.append("g")
+            .selectAll("g")
+            .data(data)
+            .enter().append("g")
+            .attr("transform", function (d, i) {
+                return "rotate(" + ((x(days[(i % 7)]) + x.bandwidth() / 3) * 180 / Math.PI - 90)
+                    + ")translate(" + radius + ",0)";
+            });
+
+        label.append("text")
+            .attr("transform", function (d) {
+                return "rotate(90)";
+            })
+            .style("font-size", "14px")
+            .text(function (d, i) {
+                return days[(i % 7)];
+            });
+
+        var yAxis = g.append("g")
+            .attr("text-anchor", "end");
+
+        var yTick = yAxis
+            .selectAll("g")
+            .data(y.ticks(5).slice(1))
+            .enter().append("g");
+
+        yTick.append("circle")
+            .attr("fill", "none")
+            .attr("stroke", "#000")
+            .attr("stroke-dasharray", "3,5")
+            .attr("stroke-opacity", 0.2)
+            .attr("r", y);
+
+        yTick.append("circle")
+            .attr("fill", "none")
+            .attr("stroke", "#000")
+            .attr("r", y(24));
+
+        yTick.append("text")
+            .attr("x", 0)
+            .attr("y", function (d) {
+                return -y(d);
+            })
+            .attr("dy", "0.15em")
+            .attr("transform", "rotate(18)")
+            .attr("stroke", "#fff")
+            .attr("stroke-width", 5)
+            .text(y.tickFormat(10, "s"));
+
+        yTick.append("text")
+            .attr("x", 0)
+            .attr("y", function (d) {
+                return -y(d);
+            })
+            .attr("fill", "rgba(0,0,0,0.38)")
+            .attr("dy", "0.15em")
+            .attr("transform", "rotate(18)")
+            .text(y.tickFormat(10, "s"));
+
+        g.append("g")
+            .selectAll("g")
+            .data(daysData)
+            .enter()
+            .append("path")
+            .attr("d", d3.arc()
+                .innerRadius(function (d) {
+                    return 50;
+                })
+                .outerRadius(function (d, i) {
+                    return y(d.Value);
+                })
+                .startAngle(function (d, i) {
+                    return x(days[(i % 7)]);
+                })
+                .endAngle(function (d, i) {
+                    return x(days[(i % 7)]) + x.bandwidth();
+                })
+                .padAngle(0.02)
+                .padRadius(radius))
+            .attr("class", "day")
+            .append("svg:title")
+            .text(function (d) {
+                return d.Value;
+            });
+
     }
+
 }
