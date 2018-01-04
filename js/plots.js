@@ -11,14 +11,11 @@ function init() {
                        .scale(150000)
                        .center([ -122.447, 37.777 ]);
 
-    console.log("center" + Mercator.center() + " " + Mercator.scale() + " " + Mercator.translate());
-
     //create path variable
     var pathSF = d3.geoPath()
                      .projection(Mercator);
 
     var offsetMercator = Mercator.translate();
-    console.log("offsetM" + offsetMercator);
 
     //Define what to do when dragging
     var dragging = function(d) {
@@ -159,26 +156,25 @@ function init() {
 
         days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-        var sectionWidth = d3.select("section").node().getBoundingClientRect().width;
         var radialSvg = d3.select("#radial-plot");
-        var width = +radialSvg.attr("width");
-        var height = +radialSvg.attr("height");
-        var radius = 190;
+        var rWidth = +radialSvg.node().getBoundingClientRect().width;
+        var rHeight = +radialSvg.node().getBoundingClientRect().height;
+        var radius = 215;
 
-        var g = radialSvg.append("g").attr("transform", "translate(250,250)");
+        var g = radialSvg.append("g").attr("transform", "translate(" + rWidth / 2 + "," + rHeight / 2 + ")");
 
         var x = d3.scaleBand().range([0, 2 * Math.PI]);
         var y = d3.scaleLinear();
 
-        x.domain(data.map(function (d, i) {
+        x.domain(daysData.map(function (d, i) {
             return days[(i % 7)];
         }));
         y.domain([0, 2000])
-            .range([50, 175]);
+            .range([50, 200]);
 
         var label = g.append("g")
             .selectAll("g")
-            .data(data)
+            .data(daysData)
             .enter().append("g")
             .attr("transform", function (d, i) {
                 return "rotate(" + ((x(days[(i % 7)]) + x.bandwidth() / 3) * 180 / Math.PI - 90)
