@@ -16,7 +16,9 @@
     <script src="https://d3js.org/d3-array.v1.min.js"></script>
     <script src="https://d3js.org/d3-geo.v1.min.js"></script>
     <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
-    <script> var aitoff = d3.geoAitoff(); </script>
+    <script>
+        var aitoff = d3.geoAitoff();
+    </script>
 
 
 
@@ -27,27 +29,37 @@
     <h1>Crime in the City of San Francisco</h1>
 
     <section>
-       Select crime category: <select id="crime-category"></select>
+        Select crime category:
+        <select id="crime-category"></select>
         <svg id="svg2"></svg>
     </section>
 
     <section class="description blue">
-        <h3>Crime in the City of San Francisco</h3>
+        <h3>Data discovery 1</h3>
+
+        <p>
+            Using the map it is easy to see where the criminal incidents takes place geographically. The police districts are not equally
+            large, but it is obvious that the smallest district covers the area with the highest intensity of crime. Most
+            of the different crime types has the same geographic pattern. But a few crime categories differ. For instance
+            is vehicle theft much more evenly distributed over the whole San Francisco area.
+        </p>
     </section>
 
     <section class="description teal">
         <h3>Number of Crimes by Day of the Week</h3>
         <p>
-            The visualisation on the right-hand side shows a radial plot displaying the distribution of crimes across the days of the week.
+            The visualisation on the right-hand side shows a radial plot displaying the distribution of crimes across the days of the
+            week.
         </p>
         <p>
-            Originally, the hypothesis was that perhaps more crimes occur on certain days of the week such as Friday and Saturday when more people
-            are likely to spend their spare time out in the streets. However, the visualisation proves that this is not the case as the number of crimes
-            that are reported on any particular day of the week is very similar to the other days.
+            Originally, the hypothesis was that perhaps more crimes occur on certain days of the week such as Friday and Saturday when
+            more people are likely to spend their spare time out in the streets. However, the visualisation proves that this
+            is not the case as the number of crimes that are reported on any particular day of the week is very similar to
+            the other days.
         </p>
         <p>
-            The plot shows that the values for each day are very similar. By hovering over a specific bar in the plot, the actual number of crimes recorded
-            on that day of the week is displayed.
+            The plot shows that the values for each day are very similar. By hovering over a specific bar in the plot, the actual number
+            of crimes recorded on that day of the week is displayed.
         </p>
     </section>
 
