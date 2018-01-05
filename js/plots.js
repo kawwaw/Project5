@@ -20,9 +20,6 @@ function init() {
     //Define what to do when dragging
     var dragging = function(d) {
 
-        //Log out d3.event, so you can see all the goodies inside
-        //console.log(d3.event);
-
         //Get the current (pre-dragging) translation offset
         var offset = Mercator.translate();
 
@@ -120,8 +117,11 @@ function init() {
                     var dataset = crime.features.filter(function(a) {
                         return a.properties.Category === selectedCategory;
                     });
-                    var circle = svg.selectAll("circle").data(dataset);
+
+                    var circle = svg.selectAll("circle").data([]);
                     circle.exit().remove();
+
+                    circle = svg.selectAll("circle").data(dataset);
                     circle.enter()
                         .append("circle")
                         .attr("cx", function(d) {
@@ -139,11 +139,11 @@ function init() {
                         .data(data)
                         .enter()
                         .append("circle")
-                        .attr("cx", function (d) {
-                            return Mercator([d.geometry.coordinates[0], d.geometry.coordinates[1]])[0]
+                        .attr("cx", function(d) {
+                            return Mercator([ d.geometry.coordinates[0], d.geometry.coordinates[1] ])[0]
                         })
-                        .attr("cy", function (d) {
-                            return Mercator([d.geometry.coordinates[0], d.geometry.coordinates[1]])[1]
+                        .attr("cy", function(d) {
+                            return Mercator([ d.geometry.coordinates[0], d.geometry.coordinates[1] ])[1]
                         })
                         .attr("r", 2)
                         .attr("fill", "green")
@@ -151,10 +151,9 @@ function init() {
                 }
             });
 
-
         //radial plot
 
-        days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        days = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ];
 
         var radialSvg = d3.select("#radial-plot");
         var rWidth = +radialSvg.node().getBoundingClientRect().width;
@@ -163,40 +162,41 @@ function init() {
 
         var g = radialSvg.append("g").attr("transform", "translate(" + rWidth / 2 + "," + rHeight / 2 + ")");
 
-        var x = d3.scaleBand().range([0, 2 * Math.PI]);
+        var x = d3.scaleBand().range([ 0, 2 * Math.PI ]);
         var y = d3.scaleLinear();
 
-        x.domain(daysData.map(function (d, i) {
+        x.domain(daysData.map(function(d, i) {
             return days[(i % 7)];
         }));
-        y.domain([0, 2000])
-            .range([50, 200]);
+        y.domain([ 0, 2000 ])
+            .range([ 50, 200 ]);
 
         var label = g.append("g")
-            .selectAll("g")
-            .data(daysData)
-            .enter().append("g")
-            .attr("transform", function (d, i) {
-                return "rotate(" + ((x(days[(i % 7)]) + x.bandwidth() / 3) * 180 / Math.PI - 90)
-                    + ")translate(" + radius + ",0)";
-            });
+                        .selectAll("g")
+                        .data(daysData)
+                        .enter()
+                        .append("g")
+                        .attr("transform", function(d, i) {
+                            return "rotate(" + ((x(days[(i % 7)]) + x.bandwidth() / 3) * 180 / Math.PI - 90) + ")translate(" + radius + ",0)";
+                        });
 
         label.append("text")
-            .attr("transform", function (d) {
+            .attr("transform", function(d) {
                 return "rotate(90)";
             })
             .style("font-size", "14px")
-            .text(function (d, i) {
+            .text(function(d, i) {
                 return days[(i % 7)];
             });
 
         var yAxis = g.append("g")
-            .attr("text-anchor", "end");
+                        .attr("text-anchor", "end");
 
         var yTick = yAxis
-            .selectAll("g")
-            .data(y.ticks(5).slice(1))
-            .enter().append("g");
+                        .selectAll("g")
+                        .data(y.ticks(5).slice(1))
+                        .enter()
+                        .append("g");
 
         yTick.append("circle")
             .attr("fill", "none")
@@ -212,7 +212,7 @@ function init() {
 
         yTick.append("text")
             .attr("x", 0)
-            .attr("y", function (d) {
+            .attr("y", function(d) {
                 return -y(d);
             })
             .attr("dy", "0.15em")
@@ -223,7 +223,7 @@ function init() {
 
         yTick.append("text")
             .attr("x", 0)
-            .attr("y", function (d) {
+            .attr("y", function(d) {
                 return -y(d);
             })
             .attr("fill", "rgba(0,0,0,0.38)")
@@ -236,27 +236,26 @@ function init() {
             .data(daysData)
             .enter()
             .append("path")
-            .attr("d", d3.arc()
-                .innerRadius(function (d) {
-                    return 50;
-                })
-                .outerRadius(function (d, i) {
-                    return y(d.Value);
-                })
-                .startAngle(function (d, i) {
-                    return x(days[(i % 7)]);
-                })
-                .endAngle(function (d, i) {
-                    return x(days[(i % 7)]) + x.bandwidth();
-                })
-                .padAngle(0.02)
-                .padRadius(radius))
+            .attr("d",
+                  d3.arc()
+                      .innerRadius(function(d) {
+                          return 50;
+                      })
+                      .outerRadius(function(d, i) {
+                          return y(d.Value);
+                      })
+                      .startAngle(function(d, i) {
+                          return x(days[(i % 7)]);
+                      })
+                      .endAngle(function(d, i) {
+                          return x(days[(i % 7)]) + x.bandwidth();
+                      })
+                      .padAngle(0.02)
+                      .padRadius(radius))
             .attr("class", "day")
             .append("svg:title")
-            .text(function (d) {
+            .text(function(d) {
                 return d.Value;
             });
-
     }
-
 }
