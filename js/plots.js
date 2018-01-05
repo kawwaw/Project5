@@ -4,11 +4,11 @@ function init() {
 
     var svg = d3.select('#svg2');
     var wSF = +svg.node().getBoundingClientRect().width;
-    var hSF = +svg.node().getBoundingClientRect().height;
+    var hSF = +svg.node().getBoundingClientRect().height - 50;
     //Number formatting for population values
     var Mercator = d3.geoMercator()
                        .translate([ wSF / 2, hSF / 2 ])
-                       .scale(150000)
+                       .scale(180000)
                        .center([ -122.447, 37.777 ]);
 
     //create path variable

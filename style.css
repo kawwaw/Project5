@@ -24,6 +24,10 @@ html, body {
     background-color: #f7f7f7;
     min-width: 1200px;
 }
+h1 {
+    padding: 24px 36px;
+    color: rgba(0,0,0,0.83);
+}
 h2 {
     padding: 24px 36px;
     color: rgba(0,0,0,0.83);
